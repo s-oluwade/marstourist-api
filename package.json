@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@azure/functions": "^4.5.0",
     "@types/bcrypt": "^5.0.0",
     "@types/express": "^4.17.17",
     "@types/express-session": "^1.17.7",
