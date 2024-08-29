@@ -1,0 +1,51 @@
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
+name: Build and deploy container app to Azure Web App - marstouristapi
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: 'ubuntu-latest'
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Log in to registry
+      uses: docker/login-action@v2
+      with:
+        registry: https://webappsandapis.azurecr.io/
+        username: ${{ secrets.AzureAppService_ContainerUsername_28b45843c25941e590344fbc8388f8d7 }}
+        password: ${{ secrets.AzureAppService_ContainerPassword_7d24276adf3d4952b304e3af7664438b }}
+
+    - name: Build and push container image to registry
+      uses: docker/build-push-action@v3
+      with:
+        push: true
+        tags: webappsandapis.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_28b45843c25941e590344fbc8388f8d7 }}/marstourist-api:${{ github.sha }}
+        file: ./Dockerfile
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: 'production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+    steps:
+    - name: Deploy to Azure Web App
+      id: deploy-to-webapp
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'marstouristapi'
+        slot-name: 'production'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_fea6b3f5ea4f4b8ab4c1e67009a9a7c8 }}
+        images: 'webappsandapis.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_28b45843c25941e590344fbc8388f8d7 }}/marstourist-api:${{ github.sha }}'
