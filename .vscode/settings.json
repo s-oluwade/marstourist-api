@@ -8,5 +8,15 @@
     "amplify/backend/amplify-meta.json": true,
     "amplify/backend/awscloudformation": true
   },
+<<<<<<< HEAD
+  "azureFunctions.deploySubpath": ".",
+  "azureFunctions.postDeployTask": "npm install (functions)",
+  "azureFunctions.projectLanguage": "TypeScript",
+  "azureFunctions.projectRuntime": "~4",
+  "debug.internalConsoleOptions": "neverOpen",
+  "azureFunctions.projectLanguageModel": 4,
+  "azureFunctions.preDeployTask": "npm prune (functions)"
+=======
   "appService.defaultWebAppToDeploy": "None"
+>>>>>>> cddf2935dd82f59c09c942fd32c3943cb614b56b
 }

@@ -22,8 +22,12 @@ app.use(express.json());
 const cors = require('cors');
 app.use(cors({
     credentials: true,
+<<<<<<< HEAD
     origin: ['https://marstourist.azurewebsites.net', 'http://localhost', 'http://localhost:80'],
     // origin: 'https://marstourist.azurewebsites.net'
+=======
+    origin: [env.CLIENT_DOMAIN],
+>>>>>>> 1ccf00ab75301c8ac2df654c45e8ede5afb83e3c
 }));
 
 // Session cookie configuration
